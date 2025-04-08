@@ -1,53 +1,53 @@
-﻿@model Hotel.Domain.Entities.Suite
+﻿@model Suite
 
-<h1 class="text-center mt-5 text-white">🏨 Add New Suite</h1>
+<h1 class="text-center mt-5 text-white fw-bold display-6">🏨 Add New Suite</h1>
 
-<div class="d-flex justify-content-center mt-4">
-    <div class="card bg-dark bg-opacity-75 text-white p-4 shadow-lg" style="width: 100%; max-width: 600px; border-radius: 1rem;">
-        <form method="post" class="row g-3">
-@*             <div asp-validation-summary="ModelOnly"></div> *@
+<div class="d-flex justify-content-center mt-4 mb-5">
+    <div class="card bg-dark bg-opacity-75 text-white p-5 shadow-lg" style="width: 100%; max-width: 700px; border-radius: 1.5rem;">
+        <form method="post" class="row g-4">
             <div class="form-floating col-12">
-                <input asp-for="Name" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Name" />
+                <input asp-for="Name" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Suite Name" />
                 <label asp-for="Name" class="text-white">Suite Name</label>
                 <span asp-validation-for="Name" class="text-danger small"></span>
             </div>
             <div class="form-floating col-12">
-                <input asp-for="Description" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Description" />
+                <input asp-for="Description" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Suite Description" />
                 <label asp-for="Description" class="text-white">Suite Description</label>
                 <span asp-validation-for="Description" class="text-danger small"></span>
             </div>
-            <div class="form-floating col-12">
-                <input asp-for="Price" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Price" />
-                <label asp-for="Price" class="text-white">Suite Price</label>
+            <div class="form-floating col-md-6">
+                <input asp-for="Price" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Suite Price" />
+                <label asp-for="Price" class="text-white">Price (€)</label>
                 <span asp-validation-for="Price" class="text-danger small"></span>
             </div>
-            <div class="form-floating col-12">
-                <input asp-for="Sqft" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Sqft" />
-                <label asp-for="Sqft" class="text-white">Suite Sqft</label>
+            <div class="form-floating col-md-6">
+                <input asp-for="Sqft" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Suite Sqft" />
+                <label asp-for="Sqft" class="text-white">Size (sqft)</label>
                 <span asp-validation-for="Sqft" class="text-danger small"></span>
             </div>
-            <div class="form-floating col-12">
-                <input asp-for="Occupancy" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Occupancy" />
-                <label asp-for="Occupancy" class="text-white">Suite Occupancy</label>
+            <div class="form-floating col-md-6">
+                <input asp-for="Occupancy" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Occupancy" />
+                <label asp-for="Occupancy" class="text-white">Max Occupancy</label>
                 <span asp-validation-for="Occupancy" class="text-danger small"></span>
             </div>
-            <div class="form-floating col-12">
-                <input asp-for="ImageUrl" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow-sm" placeholder="Suite Image" />
-                <label asp-for="ImageUrl" class="text-white">Suite Image</label>
+            <div class="form-floating col-md-6">
+                <input asp-for="ImageUrl" class="form-control bg-secondary bg-opacity-50 text-white border-0 shadow" placeholder="Image URL" />
+                <label asp-for="ImageUrl" class="text-white">Image URL</label>
                 <span asp-validation-for="ImageUrl" class="text-danger small"></span>
             </div>
 
-            <div class="col-12 d-flex justify-content-between mt-3">
-                <a asp-controller="Suite" asp-action="Index" class="btn btn-outline-light px-4 shadow">
-                    🔙 Back to List
+            <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                <a asp-controller="Suite" asp-action="Index" class="btn btn-outline-light px-4 py-2 shadow rounded-pill">
+                    🔙 Back
                 </a>
-                <button type="submit" class="btn btn-primary px-4 shadow">💾 Save</button>
+                <button type="submit" class="btn btn-warning text-dark fw-semibold px-4 py-2 shadow rounded-pill">
+                    💾 Save Suite
+                </button>
             </div>
         </form>
     </div>
 </div>
-@section Scripts{
-@{
-    <partial name="_ValidationScriptsPartial"  />
- }
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
