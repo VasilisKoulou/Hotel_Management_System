@@ -1,4 +1,5 @@
-﻿using Hotel.Domain.Entities;
+﻿using Hotel.Application.Common.Interfaces;
+using Hotel.Domain.Entities;
 using Hotel.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,15 +8,16 @@ namespace Hotel_Management_System.Controllers
 
     public class SuiteController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _uow;
+        
 
-        public SuiteController(ApplicationDbContext context)
+        public SuiteController(IUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
         public IActionResult Index()
         {
-            var suites = _context.Suites.ToList();
+            var suites = _uow.Suite.GetAll();
             return View(suites);
         }
 
@@ -33,8 +35,8 @@ namespace Hotel_Management_System.Controllers
             }
             if (ModelState.IsValid)
             {
-                _context.Suites.Add(obj);
-                _context.SaveChanges();
+                _uow.Suite.Add(obj);
+                _uow.Save();
                 TempData["success"] = "Suite created successfully";
                 return RedirectToAction("Index");
             }
@@ -44,7 +46,7 @@ namespace Hotel_Management_System.Controllers
 
         public IActionResult Update(int suiteId)
         {
-            Suite? obj= _context.Suites.FirstOrDefault(u=>u.SuiteId == suiteId);          
+            Suite? obj= _uow.Suite.Get(u=>u.SuiteId == suiteId);          
 
             if (obj is null)
             {
@@ -57,8 +59,8 @@ namespace Hotel_Management_System.Controllers
         {
             if (ModelState.IsValid && obj.SuiteId>0)
             {
-                _context.Suites.Update(obj);
-                _context.SaveChanges();
+                _uow.Suite.Update(obj);
+                _uow.Save();
                 TempData["success"] = "Suite updated successfully";
                 return RedirectToAction("Index");
             }
@@ -68,7 +70,7 @@ namespace Hotel_Management_System.Controllers
 
         public IActionResult Delete(int suiteId)
         {
-            Suite? obj = _context.Suites.FirstOrDefault(u => u.SuiteId == suiteId);
+            Suite? obj = _uow.Suite.Get(u => u.SuiteId == suiteId);
 
             if (obj is null)
             {
@@ -79,11 +81,11 @@ namespace Hotel_Management_System.Controllers
         [HttpPost]
         public IActionResult Delete(Suite obj)
         {
-            Suite? objFromDb = _context.Suites.FirstOrDefault(u => u.SuiteId == obj.SuiteId);
+            Suite? objFromDb = _uow.Suite.Get(u => u.SuiteId == obj.SuiteId);
             if (objFromDb is not null)
             {
-                _context.Suites.Remove(objFromDb);
-                _context.SaveChanges();
+                _uow.Suite.Remove(objFromDb);
+                _uow.Save();
                 TempData["success"] = "Suite deleted successfully";
                 return RedirectToAction("Index");
             }

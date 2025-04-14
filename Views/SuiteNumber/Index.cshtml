@@ -23,7 +23,7 @@
                 @foreach (var item in Model)
                 {
                     <tr style="transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(0,139,139,0.8)'" onmouseout="this.style.backgroundColor='transparent'">
-                        <td>@item.SuiteId</td>
+                        <td>@item.Suite.Name</td>
                         <td>@item.Suite_Number</td>
                         <td>@item.SpecialDetails</td>
                         <td class="text-center">
