@@ -1,0 +1,51 @@
+﻿@model SuiteNumberVM
+
+<h1 class="text-center mt-5 text-white fw-bold display-6">⚠️ Delete Suite Number</h1>
+
+<div class="d-flex justify-content-center mt-4 mb-5">
+    <div class="card bg-dark bg-opacity-75 text-white p-5 shadow-lg" style="width: 100%; max-width: 700px; border-radius: 1.5rem;">
+        <form method="post" class="row g-4">
+            <input asp-for="SuiteNumber.Suite_Number" type="hidden" />
+
+            <div class="form-floating col-12">
+                <select disabled asp-for="SuiteNumber.SuiteId" asp-items="@Model.SuiteList"
+                        class="form-select bg-secondary bg-opacity-25 text-white border-0 shadow-sm" aria-label="Suite Name">
+                    <option disabled selected>--Select Suite--</option>
+                </select>
+                <label asp-for="SuiteNumber.SuiteId" class="text-white">Suite Name</label>
+                <span asp-validation-for="SuiteNumber.SuiteId" class="text-danger small"></span>
+            </div>
+
+            <div class="form-floating col-12">
+                <input asp-for="SuiteNumber.Suite_Number" disabled class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Suite Number" />
+                <label asp-for="SuiteNumber.Suite_Number" class="text-white">Suite Number</label>
+                <span asp-validation-for="SuiteNumber.Suite_Number" class="text-danger small"></span>
+            </div>
+
+            <div class="form-floating col-md-6">
+                <input asp-for="SuiteNumber.SpecialDetails" disabled class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Special Details" />
+                <label asp-for="SuiteNumber.SpecialDetails" class="text-white">Special Details</label>
+                <span asp-validation-for="SuiteNumber.SpecialDetails" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+                <p class="text-warning fw-semibold fs-5">
+                    ⚠️ Are you sure you want to delete this suite number?
+                </p>
+            </div>
+
+            <div class="col-12 d-flex justify-content-between mt-3">
+                <a asp-controller="SuiteNumber" asp-action="Index" class="btn btn-outline-light px-4 py-2 shadow rounded-pill">
+                    🔙 Cancel
+                </a>
+                <button type="submit" class="btn btn-danger px-4 py-2 shadow rounded-pill" onclick="return confirm('Are you sure you want to delete this suite number?');">
+                    🗑️ Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
