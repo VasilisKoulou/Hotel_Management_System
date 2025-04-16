@@ -9,11 +9,13 @@ namespace Hotel_Management_System.Controllers
     public class SuiteController : Controller
     {
         private readonly IUnitOfWork _uow;
-        
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public SuiteController(IUnitOfWork uow)
+
+        public SuiteController(IUnitOfWork uow, IWebHostEnvironment webHostEnvironment)
         {
             _uow = uow;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -29,20 +31,45 @@ namespace Hotel_Management_System.Controllers
         [HttpPost]
         public IActionResult Create(Suite obj)
         {
-            if(obj.Name == obj.Description)
+            if (obj.Name == obj.Description)
             {
                 ModelState.AddModelError("Name", "The name and description cannot be the same.");
             }
+
             if (ModelState.IsValid)
             {
+                if (obj.Image != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "Suite");
+
+                    if (!Directory.Exists(imagePath))
+                    {
+                        Directory.CreateDirectory(imagePath);
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create))
+                    {
+                        obj.Image.CopyTo(fileStream);
+                    }
+
+                    obj.ImageUrl = "/images/Suite/" + fileName;
+                }
+                else
+                {
+                    obj.ImageUrl = "/images/Suite/default.png"; 
+                }
+
                 _uow.Suite.Add(obj);
                 _uow.Save();
                 TempData["success"] = "Suite created successfully";
                 return RedirectToAction("Index");
             }
+
             TempData["error"] = "Error creating suite";
-            return View();
+            return View(obj);
         }
+
 
         public IActionResult Update(int suiteId)
         {
@@ -59,6 +86,29 @@ namespace Hotel_Management_System.Controllers
         {
             if (ModelState.IsValid && obj.SuiteId>0)
             {
+                if (obj.Image != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "Suite");
+
+                    if (!string.IsNullOrEmpty(obj.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('/'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create))
+                    {
+                        obj.Image.CopyTo(fileStream);
+                    }
+
+                    obj.ImageUrl = "/images/Suite/" + fileName;
+                }
+
                 _uow.Suite.Update(obj);
                 _uow.Save();
                 TempData["success"] = "Suite updated successfully";
@@ -84,6 +134,15 @@ namespace Hotel_Management_System.Controllers
             Suite? objFromDb = _uow.Suite.Get(u => u.SuiteId == obj.SuiteId);
             if (objFromDb is not null)
             {
+                if (!string.IsNullOrEmpty(obj.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, objFromDb.ImageUrl.TrimStart('/'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
                 _uow.Suite.Remove(objFromDb);
                 _uow.Save();
                 TempData["success"] = "Suite deleted successfully";
