@@ -3,48 +3,59 @@
 <h1 class="text-center mt-5 text-white fw-bold display-6">⚠️ Delete Suite</h1>
 
 <div class="d-flex justify-content-center mt-4 mb-5">
-    <div class="card bg-dark bg-opacity-75 text-white p-5 shadow-lg" style="width: 100%; max-width: 700px; border-radius: 1.5rem;">
+    <div class="card bg-dark bg-opacity-75 text-white p-5 shadow-lg" style="width: 100%; max-width: 1000px; border-radius: 1.5rem;">
         <form method="post" class="row g-4">
             <input asp-for="SuiteId" type="hidden" />
 
-            <div class="form-floating col-12">
-                <input asp-for="Name" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Suite Name" readonly />
-                <label asp-for="Name" class="text-white">Suite Name</label>
-            </div>
-            <div class="form-floating col-12">
-                <input asp-for="Description" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Description" readonly />
-                <label asp-for="Description" class="text-white">Description</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input asp-for="Price" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Price" readonly />
-                <label asp-for="Price" class="text-white">Price (€)</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input asp-for="Sqft" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Sqft" readonly />
-                <label asp-for="Sqft" class="text-white">Size (sqft)</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input asp-for="Occupancy" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Occupancy" readonly />
-                <label asp-for="Occupancy" class="text-white">Max Occupancy</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input asp-for="ImageUrl" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Image URL" readonly />
-                <label asp-for="ImageUrl" class="text-white">Image URL</label>
+            <div class="col-md-8">
+                <div class="form-floating col-12 mb-3">
+                    <input asp-for="Name" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Suite Name" readonly />
+                    <label asp-for="Name" class="text-white">Suite Name</label>
+                </div>
+                <div class="form-floating col-12 mb-3">
+                    <input asp-for="Description" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Description" readonly />
+                    <label asp-for="Description" class="text-white">Description</label>
+                </div>
+                <div class="row">
+                    <div class="form-floating col-md-6 mb-3">
+                        <input asp-for="Price" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Price" readonly />
+                        <label asp-for="Price" class="text-white">Price (€)</label>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3">
+                        <input asp-for="Sqft" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Sqft" readonly />
+                        <label asp-for="Sqft" class="text-white">Size (sqft)</label>
+                    </div>
+                </div>
+                <div class="form-floating col-md-6 mb-3">
+                    <input asp-for="Occupancy" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Occupancy" readonly />
+                    <label asp-for="Occupancy" class="text-white">Max Occupancy</label>
+                </div>
+                <div class="form-floating col-md-6 mb-3">
+                    <input asp-for="ImageUrl" class="form-control bg-secondary bg-opacity-25 text-white border-0 shadow-sm" placeholder="Image URL" readonly />
+                    <label asp-for="ImageUrl" class="text-white">Image URL</label>
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                    <p class="text-warning fw-semibold fs-5">
+                        ⚠️ Are you sure you want to delete this suite?
+                    </p>
+                </div>
+
+                <div class="col-12 d-flex justify-content-between mt-3">
+                    <a asp-controller="Suite" asp-action="Index" class="btn btn-outline-light px-4 py-2 shadow rounded-pill">
+                        🔙 Cancel
+                    </a>
+                    <button type="submit" class="btn btn-danger px-4 py-2 shadow rounded-pill" onclick="return confirm('Are you sure you want to delete this suite?');">
+                        🗑️ Delete Suite
+                    </button>
+                </div>
             </div>
 
-            <div class="col-12 text-center mt-4">
-                <p class="text-warning fw-semibold fs-5">
-                    ⚠️ Are you sure you want to delete this suite?
-                </p>
-            </div>
-
-            <div class="col-12 d-flex justify-content-between mt-3">
-                <a asp-controller="Suite" asp-action="Index" class="btn btn-outline-light px-4 py-2 shadow rounded-pill">
-                    🔙 Cancel
-                </a>
-                <button type="submit" class="btn btn-danger px-4 py-2 shadow rounded-pill" onclick="return confirm('Are you sure you want to delete this suite?');">
-                    🗑️ Delete Suite
-                </button>
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <div class="text-center">
+                    <p class="text-white mb-2">Current Image</p>
+                    <img src="@Model.ImageUrl" alt="Current Image" class="img-fluid rounded shadow" style="max-height: 250px;" />
+                </div>
             </div>
         </form>
     </div>
