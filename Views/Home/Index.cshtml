@@ -1,8 +1,56 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeVM
+
+@{
+    ViewData["Title"] = "Welcome to Vasili's Hotel";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@* <section class="text-white text-center py-5" style="background: url('/images/hotel-hero.jpg') center/cover no-repeat;">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">🏨 Vasili's Hotel</h1>
+        <p class="lead mt-3">Experience luxury and comfort like never before.</p>
+        <a asp-controller="Suite" asp-action="Index" class="btn btn-warning btn-lg mt-3 fw-semibold shadow rounded-pill">
+            ✨ Explore Suites
+        </a>
+    </div>
+</section> *@
+
+<section class="container mt-5 mb-5">
+    <h2 class="text-white fw-bold text-center mb-4">💼 Available Suites</h2>
+
+    <div class="row g-4">
+        @foreach (var suite in Model.SuiteList)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card bg-dark text-white shadow-lg border-0 h-100" style="border-radius: 1.5rem;">
+                    <img src="@suite.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@suite.Name</h5>
+                        <p class="card-text text-white-50 flex-grow-1">@suite.Description</p>
+                        <ul class="list-unstyled mb-3">
+                            <li><i class="fas fa-expand-arrows-alt me-2 text-warning"></i>Size: @suite.Sqft sqft</li>
+                            <li><i class="fas fa-users me-2 text-warning"></i>Occupancy: @suite.Occupancy</li>
+                            <li><i class="fas fa-euro-sign me-2 text-warning"></i>Price: <strong>@suite.Price.ToString("0.00")</strong></li>
+                        </ul>
+
+                        @if (suite.Suite_Amenity is not null)
+                        {
+                            <div class="mb-3">
+                                <strong class="text-warning">Amenities:</strong>
+                                <ul class="list-inline mt-1">
+                                    @foreach (var amenity in suite.Suite_Amenity)
+                                    {
+                                        <li class="list-inline-item badge bg-secondary bg-opacity-50 text-white shadow-sm px-3 py-2 m-1">@amenity.AmenityName</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+
+                        <a asp-controller="Booking" asp-action="Book" asp-route-id="@suite.SuiteId" class="btn btn-warning w-100 mt-auto fw-semibold shadow rounded-pill">
+                            📅 Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
