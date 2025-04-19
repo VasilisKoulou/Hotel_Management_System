@@ -4,15 +4,25 @@
     ViewData["Title"] = "Welcome to Vasili's Hotel";
 }
 
-@* <section class="text-white text-center py-5" style="background: url('/images/hotel-hero.jpg') center/cover no-repeat;">
+<section class="text-white text-center py-5" style="background: url('/images/hotel-hero.jpg') center/cover no-repeat;">
     <div class="container py-5">
         <h1 class="display-4 fw-bold">🏨 Vasili's Hotel</h1>
         <p class="lead mt-3">Experience luxury and comfort like never before.</p>
-        <a asp-controller="Suite" asp-action="Index" class="btn btn-warning btn-lg mt-3 fw-semibold shadow rounded-pill">
-            ✨ Explore Suites
-        </a>
+        <form asp-controller="Booking" asp-action="Search" method="post" class="row g-3 justify-content-center mt-4">
+            <div class="col-md-3">
+                <input type="date" name="checkInDate" class="form-control form-control-lg shadow rounded-pill" required />
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="nights" min="1" class="form-control form-control-lg shadow rounded-pill" placeholder="Nights" required />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-warning btn-lg shadow rounded-pill fw-semibold w-100">
+                    🔍 Search
+                </button>
+            </div>
+        </form>
     </div>
-</section> *@
+</section>
 
 <section class="container mt-5 mb-5">
     <h2 class="text-white fw-bold text-center mb-4">💼 Available Suites</h2>
@@ -21,7 +31,7 @@
         @foreach (var suite in Model.SuiteList)
         {
             <div class="col-md-6 col-lg-4">
-                <div class="card bg-dark text-white shadow-lg border-0 h-100" style="border-radius: 1.5rem;">
+                <div class="card bg-dark text-white shadow-lg border-0 h-100" style="border-radius: 1.5rem; transition: transform 0.3s ease;">
                     <img src="@suite.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;" />
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold">@suite.Name</h5>
@@ -54,3 +64,10 @@
         }
     </div>
 </section>
+
+<style>
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+</style>

@@ -1,32 +1,35 @@
-﻿using Hotel.Application.Common.Interfaces;
+﻿using Hotel.Application;
+using Hotel.Application.Common.Interfaces;
 using Hotel.Domain.Entities;
 using Hotel.Infrastructure.Data;
 using Hotel_Management_System.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotel_Management_System.Controllers
+namespace Hotel_Management_System.Areas.Admin.Controllers
 {
-
-    public class AmenityController : Controller
+    [Area("Admin")]
+    [Authorize(Roles = SD.Admin_Role)]
+    public class SuiteNumberController : Controller
     {
         private readonly IUnitOfWork _uow;
 
 
-        public AmenityController(IUnitOfWork uow)
+        public SuiteNumberController(IUnitOfWork uow)
         { 
             _uow = uow;
         }
         public IActionResult Index()
         {
-            var amenities = _uow.Amenity.GetAll(includeProperties:"Suite");
-            return View(amenities);
+            var suiteNumbers = _uow.SuiteNumber.GetAll(includeProperties:"Suite");
+            return View(suiteNumbers);
         }
 
         public IActionResult Create()
         {
-            AmenityVM amenityVM = new()
+            SuiteNumberVM suiteNumberVM = new()
             {
                 SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
                 {
@@ -35,22 +38,29 @@ namespace Hotel_Management_System.Controllers
                 })
             }; 
 
-            return View(amenityVM);
+            return View(suiteNumberVM);
         }
 
         [HttpPost]
-        public IActionResult Create(AmenityVM obj)
+        public IActionResult Create(SuiteNumberVM obj)
         {
            // ModelState.Remove("Suite");
 
+            bool suiteNumberExists = _uow.SuiteNumber.Any(u => u.Suite_Number == obj.SuiteNumber.Suite_Number);
 
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !suiteNumberExists)
             {
-                _uow.Amenity.Add(obj.Amenity);
+                _uow.SuiteNumber.Add(obj.SuiteNumber);
                 _uow.Save();
-                TempData["success"] = "Amenity created successfully";
+                TempData["success"] = "Suite Number created successfully";
                 return RedirectToAction("Index");
+            }
+
+
+            if(suiteNumberExists)
+            {
+                TempData["error"] = "Error creating suite";
             }
 
             obj.SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
@@ -62,76 +72,76 @@ namespace Hotel_Management_System.Controllers
             return View(obj);
         }
 
-        public IActionResult Update(int amenityId)
+        public IActionResult Update(int suiteNumberId)
         {
-            AmenityVM amenityVM = new()
+            SuiteNumberVM suiteNumberVM = new()
             {
                 SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.SuiteId.ToString()
                 }),
-                Amenity = _uow.Amenity.Get(u => u.AmenityID == amenityId)
+                SuiteNumber = _uow.SuiteNumber.Get(u => u.Suite_Number == suiteNumberId)
             };
 
 
-            if (amenityVM.Amenity is null)
+            if (suiteNumberVM.SuiteNumber is null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(amenityVM);
+            return View(suiteNumberVM);
         }
         [HttpPost]
-        public IActionResult Update(AmenityVM amenityVM)
+        public IActionResult Update(SuiteNumberVM suiteNumberVM)
         {
 
             if (ModelState.IsValid)
             {
-                _uow.Amenity.Update(amenityVM.Amenity);
+                _uow.SuiteNumber.Update(suiteNumberVM.SuiteNumber);
                 _uow.Save();
-                TempData["success"] = "Amenity updated successfully";
+                TempData["success"] = "Suite Number updated successfully";
                 return RedirectToAction("Index");
             }
 
-            amenityVM.SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
+            suiteNumberVM.SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.SuiteId.ToString()
             });
 
-            return View(amenityVM);
+            return View(suiteNumberVM);
         }
 
-        public IActionResult Delete(int amenityId)
+        public IActionResult Delete(int suiteNumberId)
         {
-            AmenityVM amenityVM = new()
+            SuiteNumberVM suiteNumberVM = new()
             {
                 SuiteList = _uow.Suite.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.SuiteId.ToString()
                 }),
-                Amenity = _uow.Amenity.Get(u => u.AmenityID == amenityId)
+                SuiteNumber = _uow.SuiteNumber.Get(u => u.Suite_Number == suiteNumberId)
             };
 
 
-            if (amenityVM.Amenity is null)
+            if (suiteNumberVM.SuiteNumber is null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(amenityVM);
+            return View(suiteNumberVM);
         }
         [HttpPost]
-        public IActionResult Delete(AmenityVM amenityVM)
+        public IActionResult Delete(SuiteNumberVM suiteNumberVM)
         {
-            Amenity? objFromDb = _uow.Amenity.Get(u => u.AmenityID == amenityVM.Amenity.AmenityID);
+            SuiteNumber? objFromDb = _uow.SuiteNumber.Get(u => u.Suite_Number == suiteNumberVM.SuiteNumber.Suite_Number);
             if (objFromDb is not null)
             {
-                _uow.Amenity.Remove(objFromDb);
+                _uow.SuiteNumber.Remove(objFromDb);
                 _uow.Save();
-                TempData["success"] = "Amenity deleted successfully";
+                TempData["success"] = "Suite Number deleted successfully";
                 return RedirectToAction("Index");
             }
             TempData["error"] = "Error deleting suite";

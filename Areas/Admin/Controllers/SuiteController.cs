@@ -1,11 +1,14 @@
-﻿using Hotel.Application.Common.Interfaces;
+﻿using Hotel.Application;
+using Hotel.Application.Common.Interfaces;
 using Hotel.Domain.Entities;
 using Hotel.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hotel_Management_System.Controllers
+namespace Hotel_Management_System.Areas.Admin.Controllers
 {
-
+    [Area("Admin")]
+    [Authorize(Roles = SD.Admin_Role)]
     public class SuiteController : Controller
     {
         private readonly IUnitOfWork _uow;

@@ -4,8 +4,9 @@ using Hotel_Management_System.Models;
 using Hotel_Management_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hotel_Management_System.Controllers
+namespace Hotel_Management_System.Areas.User.Controllers
 {
+    [Area("User")]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,9 +21,22 @@ namespace Hotel_Management_System.Controllers
             HomeVM home = new()
             {
                 SuiteList = _unitOfWork.Suite.GetAll(includeProperties:"Suite_Amenity"),
+                Nights = 1,
+                CheckInDate = DateOnly.FromDateTime(DateTime.Now)
             };
             return View(home);
         }
+        //[HttpPost]
+        //public IActionResult Index(HomeVM home)
+        //{
+        //    DateOnly checkOutDate = home.CheckInDate.Value.AddDays(home.Nights);
+
+        //    var suites = _unitOfWork.Suite.GetAll(includeProperties: "Suite_Amenity")
+        //        .Where(s => !_unitOfWork.Booking
+        //            .Any(b => b.SuiteId == s.SuiteId && b.CheckInDate < checkOutDate && b.CheckOutDate > home.CheckInDate)).ToList();
+
+        //    return View(home);
+        //}
 
         public IActionResult Privacy()
         {
