@@ -20,3 +20,56 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.dropdown-menu-glass {
+    background: rgba(25, 25, 35, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), 0 0 25px rgba(0, 255, 255, 0.15) inset;
+    padding: 0.7rem;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    min-width: 220px;
+    animation: fadeInDropdown 0.3s ease-out;
+}
+
+@keyframes fadeInDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-menu-glass .dropdown-item {
+    color: #e0f7fa;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.2s ease;
+}
+
+    .dropdown-menu-glass .dropdown-item:hover {
+        background: rgba(0, 255, 255, 0.15);
+        color: #00ffff;
+        transform: translateX(5px);
+    }
+
+    .dropdown-menu-glass .dropdown-item i {
+        width: 20px;
+    }
+

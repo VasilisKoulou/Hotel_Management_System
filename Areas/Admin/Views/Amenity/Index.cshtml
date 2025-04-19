@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Amenity>
+
+<h1 class="text-center mt-5 text-white display-6 fw-bold">🏨 Amenity List</h1>
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-controller="Amenity" asp-action="Create" class="btn btn-success px-4 shadow rounded-pill">
+            ➕ Add New Amenity
+        </a>
+    </div>
+
+    <div class="table-responsive shadow-lg rounded">
+        <table class="table table-hover text-white align-middle mb-0" style="background-color: rgba(33, 37, 41, 0.85); border-radius: 1rem; overflow: hidden;">
+            <thead class="table-dark">
+                <tr>
+                    <th>Amenity ID</th>
+                    <th>Amenity Name</th>
+                    <th>Suite Name</th>
+                    <th>Description</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(0,139,139,0.8)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <td>@item.AmenityID</td>
+                        <td>@item.AmenityName</td>
+                        <td>@item.Suite.Name</td>
+                        <td>@item.Description</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a asp-controller="Amenity" asp-action="Update" asp-route-amenityId="@item.AmenityID"
+                                   class="btn btn-outline-warning btn-sm rounded-circle shadow" title="Update">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-controller="Amenity" asp-action="Delete" asp-route-amenityId="@item.AmenityID"
+                                   class="btn btn-outline-danger btn-sm rounded-circle shadow" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

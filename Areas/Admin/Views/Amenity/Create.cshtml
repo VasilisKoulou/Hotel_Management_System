@@ -1,0 +1,41 @@
+﻿@model AmenityVM
+
+<h1 class="text-center mt-5 text-white fw-bold display-6">🏨 Add New Amenity</h1>
+
+<div class="d-flex justify-content-center mt-4 mb-5">
+    <div class="card bg-dark bg-opacity-75 text-white p-5 shadow-lg" style="width: 100%; max-width: 700px; border-radius: 1.5rem;">
+        <form method="post" class="row g-4">
+            <div class="form-floating col-12">
+                <select asp-for="Amenity.SuiteId" asp-items="@Model.SuiteList"
+                        class="form-select bg-secondary bg-opacity-75 text-white border-0 shadow" aria-label="Suite Name">
+                    <option disabled selected>--Select Suite--</option>
+                </select>
+                <label asp-for="Amenity.SuiteId" class="text-white">Suite Name</label>
+                <span asp-validation-for="Amenity.SuiteId" class="text-danger small"></span>
+            </div>
+            <div class="form-floating col-12">
+                <input asp-for="Amenity.AmenityName" class="form-control bg-secondary bg-opacity-75 text-white border-0 shadow" placeholder="Amenity Name" />
+                <label asp-for="Amenity.AmenityName" class="text-white">Amenity Name</label>
+                <span asp-validation-for="Amenity.AmenityName" class="text-danger small"></span>
+            </div>
+            <div class="form-floating col-md-6">
+                <input asp-for="Amenity.Description" class="form-control bg-secondary bg-opacity-75 text-white border-0 shadow" placeholder="Description" />
+                <label asp-for="Amenity.Description" class="text-white">Description</label>
+                <span asp-validation-for="Amenity.Description" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                <a asp-controller="Amenity" asp-action="Index" class="btn btn-outline-light px-4 py-2 shadow rounded-pill">
+                    🔙 Back
+                </a>
+                <button type="submit" class="btn btn-warning text-dark fw-semibold px-4 py-2 shadow rounded-pill">
+                    💾 Save Amenity
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

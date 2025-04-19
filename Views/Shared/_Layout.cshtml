@@ -20,27 +20,49 @@
                     <i class="fas fa-crown me-2 text-warning"></i>Vasili's Hotel
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link active" asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Suite" asp-action="Index">Suites</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="SuiteNumber" asp-action="Index">Suite Number</a>
-                        </li>
-                        <li class="nav-item">
-                            <button id="toggleTheme" class="btn btn-sm btn-outline-warning ms-3">🌓</button>
-                        </li>
+                        @if (User.IsInRole(SD.Admin_Role))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="contentDropdown" role="button">
+                                    🛠️ Content Management
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-glass border-0 shadow" aria-labelledby="contentDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Suite" asp-action="Index">
+                                            <i class="fas fa-bed"></i> Suites
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="SuiteNumber" asp-action="Index">
+                                            <i class="fas fa-door-closed"></i> Suite Number
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Amenity" asp-action="Index">
+                                            <i class="fas fa-cocktail"></i> Amenity
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <button id="toggleTheme" class="btn btn-sm btn-outline-warning ms-3">🌓</button>
+                            </li>
+                        }
                     </ul>
+					<partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
