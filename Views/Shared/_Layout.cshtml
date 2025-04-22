@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/backgroundStyle.css" asp-append-version="true">
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/InfoForms.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/Hotel_Management_System.styles.css" asp-append-version="true" />
@@ -34,7 +35,7 @@
                         @if (User.IsInRole(SD.Admin_Role))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="contentDropdown" role="button">
+                                <a class="nav-link dropdown-toggle" id="contentDropdown" role="button">
                                     🛠️ Content Management
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-glass border-0 shadow" aria-labelledby="contentDropdown">
@@ -55,11 +56,6 @@
                                     </li>
                                 </ul>
                             </li>
-
-
-                            <li class="nav-item">
-                                <button id="toggleTheme" class="btn btn-sm btn-outline-warning ms-3">🌓</button>
-                            </li>
                         }
                     </ul>
 					<partial name="_LoginPartial" />
@@ -74,38 +70,51 @@
         </main>
     </div>
 
-    <footer class="text-light bg-dark border-top mt-5 pt-4 pb-2">
-        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <div>
-                <span>&copy; 2025 - Vasili's Hotel</span> |
-                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-warning">Privacy</a>
+    <footer class="text-light bg-dark border-top mt-auto pt-5 pb-4 shadow-lg">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h5 class="text-warning fw-bold mb-3"><i class="fas fa-crown me-2"></i>Vasili's Hotel</h5>
+                    <p class="small">
+                        Your luxury escape in the heart of hospitality.<br />
+                        Experience comfort, elegance & unforgettable moments.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a asp-area="User" asp-controller="Home" asp-action="Index" class="text-light text-decoration-none">🏠 Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">🔒 Privacy Policy</a></li>
+                        <li><a asp-area="Admin" asp-controller="Suite" asp-action="Index" class="text-light text-decoration-none">🛏️ Suites</a></li>
+                        <li><a asp-area="Admin" asp-controller="Amenity" asp-action="Index" class="text-light text-decoration-none">🍹 Amenities</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Connect with us</h6>
+                    <div class="d-flex mb-3">
+                        <a href="#" class="text-warning me-3 fs-5"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-warning me-3 fs-5"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-warning me-3 fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-warning fs-5"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                    <p class="small mb-1"><i class="fas fa-envelope me-2"></i>info@vasilishotel.gr</p>
+                    <p class="small"><i class="fas fa-phone me-2"></i>+30 210 123 4567</p>
+                </div>
             </div>
-            <div class="mt-2 mt-md-0">
-                <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+
+            <hr class="border-light my-4" />
+
+            <div class="text-center small text-muted">
+                &copy; 2025 Vasili's Hotel | Designed with ❤️ in Greece
             </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        const toggleBtn = document.getElementById("toggleTheme");
-        toggleBtn.addEventListener("click", () => {
-            document.documentElement.classList.toggle("dark-mode");
-            localStorage.setItem("theme", document.documentElement.classList.contains("dark-mode") ? "dark" : "light");
-        });
-
-        // On page load
-        window.addEventListener("DOMContentLoaded", () => {
-            const theme = localStorage.getItem("theme");
-            if (theme === "dark") {
-                document.documentElement.classList.add("dark-mode");
-            }
-        });
-    </script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
