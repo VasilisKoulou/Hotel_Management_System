@@ -125,16 +125,15 @@ namespace Hotel_Management_System.Areas.Identity.Pages.Account
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.User)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Hotel_Manager)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Admin_Role)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Employee)).GetAwaiter().GetResult();
             }
 
             Input = new()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                RoleList = _roleManager.Roles.Where(x => x.Name != SD.Admin_Role).Select(i => new SelectListItem
                 {
-                    Text = i,
-                    Value = i
+                    Text = i.Name,
+                    Value = i.Name
                 })
             };
 

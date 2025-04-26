@@ -1,0 +1,32 @@
+﻿body {
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-card {
+    background-color: #2b2b2b;
+}
+
+.dark-input {
+    background-color: #1f1f1f;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+    .dark-input::placeholder {
+        color: #aaa;
+    }
+
+.form-check-label, .form-label, label {
+    color: #ccc !important;
+}
+
+a.link-light {
+    color: #66ccff !important;
+    text-decoration: none;
+}
+
+    a.link-light:hover {
+        text-decoration: underline;
+    }
