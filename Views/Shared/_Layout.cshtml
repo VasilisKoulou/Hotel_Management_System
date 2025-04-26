@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Vasili's Hotel</title>
+    <title>@ViewData["Title"] - King of Booking</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/backgroundStyle.css" asp-append-version="true">
 
@@ -18,7 +18,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-custom shadow-lg py-3">
             <div class="container-fluid">
                 <a class="navbar-brand fw-bold fs-3" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-crown me-2 text-warning"></i>Vasili's Hotel
+                    <i class="fas fa-crown me-2 text-warning"></i>King of BooKing
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,15 +30,44 @@
                             <a class="nav-link active" asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
+							@if (!User.IsInRole(SD.Admin_Role))
+							{
+                                <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
+							}                    
                         </li>
+
                         @if (User.IsInRole(SD.Admin_Role))
                         {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="contentDropdown" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-glass border-0 shadow" aria-labelledby="contentDropdown">
+
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Index">
+                                            <i class="fas fa-users"></i> Users
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="SuiteNumber" asp-action="Index">
+                                            <i class="fas fa-door-closed"></i> Suite Number
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Amenity" asp-action="Index">
+                                            <i class="fas fa-cocktail"></i> Amenity
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="contentDropdown" role="button">
                                     🛠️ Content Management
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-glass border-0 shadow" aria-labelledby="contentDropdown">
+
                                     <li>
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Suite" asp-action="Index">
                                             <i class="fas fa-bed"></i> Suites
@@ -74,7 +103,7 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-md-4">
-                    <h5 class="text-warning fw-bold mb-3"><i class="fas fa-crown me-2"></i>Vasili's Hotel</h5>
+                    <h5 class="text-warning fw-bold mb-3"><i class="fas fa-crown me-2"></i>King of BooKing</h5>
                     <p class="small">
                         Your luxury escape in the heart of hospitality.<br />
                         Experience comfort, elegance & unforgettable moments.
@@ -99,7 +128,7 @@
                         <a href="#" class="text-warning me-3 fs-5"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-warning fs-5"><i class="fab fa-tripadvisor"></i></a>
                     </div>
-                    <p class="small mb-1"><i class="fas fa-envelope me-2"></i>info@vasilishotel.gr</p>
+                    <p class="small mb-1"><i class="fas fa-envelope me-2"></i>info@kingofbooking.gr</p>
                     <p class="small"><i class="fas fa-phone me-2"></i>+30 210 123 4567</p>
                 </div>
             </div>
@@ -107,7 +136,7 @@
             <hr class="border-light my-4" />
 
             <div class="text-center small text-muted">
-                &copy; 2025 Vasili's Hotel | Designed with ❤️ in Greece
+                &copy; 2025 King Of BooKing | Designed with ❤️ by Vasilis
             </div>
         </div>
     </footer>
