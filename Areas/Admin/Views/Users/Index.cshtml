@@ -1,32 +1,50 @@
 ﻿@model IEnumerable<Hotel.Domain.Entities.ApplicationUser>
 
-
 @{
     ViewData["Title"] = "Users";
 }
 
-<h1>Users</h1>
+<h1 class="text-center mt-5 text-white display-6 fw-bold">👥 Users List</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Email</th>
-            <th>UserName</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.FirstName</td>
-                <td>@user.Email</td>
-                <td>@user.UserName</td>
-                <td>
-                   
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-4 mb-5">
+    <div class="table-responsive shadow-lg rounded">
+        <table class="table table-hover text-white align-middle mb-0" style="background-color: rgba(33, 37, 41, 0.85); border-radius: 1rem; overflow: hidden;">
+            <thead class="table-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr style="transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(0,139,139,0.8)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>
+                            <form asp-action="ChangeRole" method="post">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <div class="d-flex align-items-center gap-2">
+                                    <select name="newRole" class="form-select form-select-sm">
+                                        @foreach (var role in user.RoleList)
+                                        {
+                                            <option value="@role" selected="@(role == user.SelectedRole ? "selected" : null)">
+                                                @role
+                                            </option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-primary">Change</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
